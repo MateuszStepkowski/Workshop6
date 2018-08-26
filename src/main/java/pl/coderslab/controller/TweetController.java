@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.coderslab.entity.Tweet;
 import pl.coderslab.entity.User;
+import pl.coderslab.repository.CommentRepository;
 import pl.coderslab.repository.TweetRepository;
 
 import javax.servlet.http.HttpSession;
@@ -23,6 +24,9 @@ public class TweetController {
 
     @Autowired
     TweetRepository tweetRepository;
+
+    @Autowired
+    CommentRepository commentRepository;
 
     @PostMapping({"/", "/home"})
     public String addNewTweet(@Validated Tweet newTweet, BindingResult bindingResult, HttpSession session){
@@ -43,6 +47,7 @@ public class TweetController {
     public String tweetDetails(@PathVariable int id, Model model){
 
         model.addAttribute("tweet", tweetRepository.findOne(id));
+        model.addAttribute("tweetComments", commentRepository.findAllByTweetIdOrderByCreatedDesc(id));
 
         return "tweetDetails";
     }

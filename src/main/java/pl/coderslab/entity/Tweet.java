@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "tweets")
@@ -25,6 +26,9 @@ public class Tweet {
 
     @ManyToOne
     private User user;
+
+    @OneToMany(mappedBy = "tweet")
+    private List<Comment> comments;
 
     public Integer getId() {
         return id;

@@ -34,6 +34,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     List<Tweet> tweets;
 
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments;
+
 
     public Integer getId() {
         return id;
