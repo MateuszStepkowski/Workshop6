@@ -24,6 +24,7 @@
     password:<form:password path="password"/>
     <input type="submit" value="Sign IN">
 </form:form>
-
+<br><br>
+For registration, click here:<a href="http://localhost:8080/signUp">| Sign UP |</a>
 </body>
 </html>

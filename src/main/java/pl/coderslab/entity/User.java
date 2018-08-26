@@ -8,6 +8,7 @@ import pl.coderslab.validationGroups.UserRegistrationValidationGroup;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -15,7 +16,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @NotBlank(groups = UserRegistrationValidationGroup.class)
     private String username;
@@ -27,15 +28,27 @@ public class User {
 
     @NotBlank(groups = {UserRegistrationValidationGroup.class, UserLoggingValidationGroup.class})
     @Email(groups = {UserRegistrationValidationGroup.class, UserLoggingValidationGroup.class})
+    @Column(unique = true)
     private String email;
 
+    @OneToMany(mappedBy = "user")
+    List<Tweet> tweets;
 
-    public int getId() {
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public List<Tweet> getTweets() {
+        return tweets;
+    }
+
+    public void setTweets(List<Tweet> tweets) {
+        this.tweets = tweets;
     }
 
     public String getUsername() {
@@ -69,4 +82,6 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
 }

@@ -33,7 +33,6 @@ public class LoggingController {
 
         if (bindingResult.hasErrors())  return "forms/loggingForm";
 
-
         User userFromDb = userRepository.findFirstByEmail(user.getEmail());
 
         if (userFromDb != null){
