@@ -16,6 +16,11 @@
 
 <jsp:include page="forms/tweetForm.jsp"/>
 
+<br><br>
+<h3><a href="http://localhost:8080/user/messages"> See your Messages ! </a> </h3><br>
+<h3><a href="http://localhost:8080/user/editUser"> Edit your account --> </a> </h3>
+<br><br>
+
 <c:forEach var="tweet" items="${allTweets}">
     user: <a href="http://localhost:8080/user/${tweet.user.id}/allTweets">${tweet.user.username}</a> |
     created: ${tweet.created} |

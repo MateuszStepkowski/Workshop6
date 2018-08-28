@@ -6,9 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import pl.coderslab.entity.Comment;
 import pl.coderslab.entity.Tweet;
 import pl.coderslab.entity.User;
 import pl.coderslab.repository.CommentRepository;
@@ -16,8 +16,7 @@ import pl.coderslab.repository.TweetRepository;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.List;
+
 
 @Controller
 public class TweetController {
@@ -29,9 +28,11 @@ public class TweetController {
     CommentRepository commentRepository;
 
     @PostMapping({"/", "/home"})
-    public String addNewTweet(@Validated Tweet newTweet, BindingResult bindingResult, HttpSession session){
+    public String addNewTweet(@Validated Tweet newTweet, BindingResult bindingResult, HttpSession session, Model model){
+
 
         if (bindingResult.hasErrors()){
+            model.addAttribute("allTweets", tweetRepository.findAllOrderByCreatedDesc());
             return "homePage";
         }
 
@@ -48,6 +49,7 @@ public class TweetController {
 
         model.addAttribute("tweet", tweetRepository.findOne(id));
         model.addAttribute("tweetComments", commentRepository.findAllByTweetIdOrderByCreatedDesc(id));
+        model.addAttribute("comment", new Comment());
 
         return "tweetDetails";
     }

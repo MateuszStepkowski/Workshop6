@@ -9,6 +9,7 @@ import pl.coderslab.validationGroups.UserRegistrationValidationGroup;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users")
@@ -21,7 +22,7 @@ public class User {
     @NotBlank(groups = UserRegistrationValidationGroup.class)
     private String username;
 
-    @NotBlank(groups = {UserRegistrationValidationGroup.class, UserLoggingValidationGroup.class})
+    @NotEmpty(groups = {UserRegistrationValidationGroup.class, UserLoggingValidationGroup.class})
     private String password;
 
     private boolean enabled;
@@ -36,6 +37,12 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Comment> comments;
+
+    @OneToMany(mappedBy = "sender")
+    List<Message> sentMessages;
+
+    @OneToMany(mappedBy = "receiver")
+    List<Message> receivedMessages;
 
 
     public Integer getId() {
@@ -86,5 +93,21 @@ public class User {
         this.email = email;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return isEnabled() == user.isEnabled() &&
+                Objects.equals(getId(), user.getId()) &&
+                Objects.equals(getUsername(), user.getUsername()) &&
+                Objects.equals(getPassword(), user.getPassword()) &&
+                Objects.equals(getEmail(), user.getEmail());
+    }
 
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getId(), getUsername(), getPassword(), isEnabled(), getEmail());
+    }
 }

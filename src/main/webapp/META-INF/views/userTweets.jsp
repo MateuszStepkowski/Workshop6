@@ -16,6 +16,10 @@
 id: ${user.id} | username: ${user.username}<br>
 <h3>user tweets:</h3>
 
+<c:if test="${thisUser != user}">
+<jsp:include page="forms/messageForm.jsp"/>
+</c:if>
+
 <c:forEach var="tweet" items="${userTweets}">
     tweet id: <a href="http://localhost:8080/tweet/${tweet.id}">${tweet.id}</a> |
     created: ${tweet.created}<br>

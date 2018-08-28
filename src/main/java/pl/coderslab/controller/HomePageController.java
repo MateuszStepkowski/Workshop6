@@ -22,11 +22,10 @@ public class HomePageController {
     TweetRepository tweetRepository;
 
     @GetMapping({"/", "/home"})
-    public String homePage(HttpSession session, Model model) {
+    public String homePage(Model model) {
 
-        if (session.getAttribute("thisUser") == null) return "redirect:/signIn";
         List<Tweet> allTweets = tweetRepository.findAllOrderByCreatedDesc();
-        model.addAttribute("newTweet", new Tweet());
+        model.addAttribute("tweet", new Tweet());
         model.addAttribute("allTweets", allTweets);
         return "homePage";
     }

@@ -25,6 +25,5 @@ created: ${tweet.created} <br><br>
 </c:forEach>
 
 <jsp:include page="forms/commentForm.jsp"/>
-
 </body>
 </html>
